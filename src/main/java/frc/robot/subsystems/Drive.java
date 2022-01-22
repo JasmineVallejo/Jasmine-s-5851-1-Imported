@@ -30,19 +30,29 @@ public class Drive extends SubsystemBase {
   double[] yprGyro;
   PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
 
-  public void move(double leftSpeed, double rightSpeed){
-    drive.tankDrive(leftSpeed, rightSpeed);
+  public void move(double leftSpeed, double rightSpeed)
+  {
+    drive.tankDrive(leftSpeed, -rightSpeed);
   }
 /** Creates a new Drive. */
   public Drive() {
     rightRear.setSelectedSensorPosition(0);
     leftFront.setSelectedSensorPosition(0);
-    rightRear.setSensorPhase(true);
-    leftFront.clearStickyFaults();
-    rightRear.configFactoryDefault();
-    leftFront.configFactoryDefault();
-    rightFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    leftRear.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    leftFront.setSensorPhase(true);
+    //rightRear.setSensorPhase(true);
+    //leftFront.clearStickyFaults();
+    //rightRear.configFactoryDefault();
+    //leftFront.configFactoryDefault();
+    //rightFront.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    //leftRear.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+  }
+
+  public void configureEncoders(){
+    rightRear.setSensorPhase(false);
+    leftFront.setSensorPhase(true);
+    rightRear.setSelectedSensorPosition(0);
+    leftFront.setSelectedSensorPosition(0);
+
   }
 double encoderToFeet;
 double rightEncoderToFeet;
@@ -55,20 +65,20 @@ yprGyro = new double[3];
 gyro.getYawPitchRoll(yprGyro);
     // This method will be called once per scheduler run
      leftTraveled = leftFront.getSelectedSensorPosition();
-     SmartDashboard.putNumber("whatever", leftTraveled);
+     SmartDashboard.putNumber("Sub Left", leftTraveled);
     encoderToFeet = leftTraveled * ((Math.PI*6)/49152);
     double rightTraveled = rightRear.getSelectedSensorPosition();
-    SmartDashboard.putNumber("right 1", rightTraveled);
+    SmartDashboard.putNumber("Sub Right", rightTraveled);
     rightEncoderToFeet = rightTraveled * ((Math.PI*6)/49152);
-    SmartDashboard.putNumberArray("gyroarray", yprGyro );
-    SmartDashboard.putNumber("gyro0", yprGyro[0]);
+   //SmartDashboard.putNumberArray("gyroarray", yprGyro );
+    //SmartDashboard.putNumber("gyro0", yprGyro[0]);
   }
   public double leftDistance(){
     return leftTraveled;
   }
-  public double rightDistance(){
-    return rightEncoderToFeet;
-  }
+ // public double rightDistance(){
+    //return rightEncoderToFeet;
+ // }
  
   public double gyroYaw(){
     return yprGyro[0];

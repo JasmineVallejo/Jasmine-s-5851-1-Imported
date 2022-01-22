@@ -32,6 +32,9 @@ public class autoMove extends CommandBase {
     pastTime = Timer.getFPGATimestamp();
     oldError = 0;
     integral = 0;
+    driveSubsystem.configureEncoders();
+
+
     
   }
 
@@ -49,11 +52,11 @@ public class autoMove extends CommandBase {
     driveSubsystem.move(0.2, 0.2);
     SmartDashboard.putNumber("Error", error);
     SmartDashboard.putNumber("speed", speed);
-    SmartDashboard.putNumber("right distance", driveSubsystem.rightDistance());
-    SmartDashboard.putNumber("left distnance", driveSubsystem.leftDistance());
-    SmartDashboard.putNumber("gyro", driveSubsystem.gyroYaw());
-    SmartDashboard.putNumber("gyroroll", driveSubsystem.gyroRoll());
-    SmartDashboard.putNumber("pitch", driveSubsystem.gyroPitch());
+    //SmartDashboard.putNumber("right distance", driveSubsystem.rightDistance());
+    SmartDashboard.putNumber("left distance", driveSubsystem.leftDistance());
+   // SmartDashboard.putNumber("gyro", driveSubsystem.gyroYaw());
+   // SmartDashboard.putNumber("gyroroll", driveSubsystem.gyroRoll());
+   // SmartDashboard.putNumber("pitch", driveSubsystem.gyroPitch());
 
 
 

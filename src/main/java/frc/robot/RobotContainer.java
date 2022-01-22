@@ -11,6 +11,7 @@ import frc.robot.subsystems.lift;
 import frc.robot.subsystems.shooterWrist;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Drive;
 import frc.robot.commands.autoMove;
@@ -45,6 +46,14 @@ public class RobotContainer {
 
   public RobotContainer() {
 
+
+
+    driveSubsystem.setDefaultCommand (new RunCommand(
+     () -> driveSubsystem.move(.7 * angel.getRawAxis(1),
+     .7 * angel.getRawAxis(5)),
+     driveSubsystem));
+
+
     /**The smart dashboard is that one page where we put the values 
      * Anyways so i put a bit of code here to start putting some data on the smartdashboard, the first being 
      * the getInstance thing. That just tells me what instances are running (like what commands are running)
@@ -61,7 +70,7 @@ public class RobotContainer {
     configureButtonBindings();
     }
   private void configureButtonBindings() {
-    JoystickButton setAngle = new JoystickButton(angel, 1);
+    /*JoystickButton setAngle = new JoystickButton(angel, 1);
     setAngle.whenPressed(new aimShooter(shooterWrist, -15));
 
     JoystickButton move = new JoystickButton(angel, 2);
@@ -90,7 +99,7 @@ public class RobotContainer {
     JoystickButton shoot = new JoystickButton(angel, 11);
     shoot.whenPressed( new shooterCommand (shooterSub, 1 * Constants.shooterSpeed));
 
-
+*/
   }
 
   
