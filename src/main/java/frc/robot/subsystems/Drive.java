@@ -10,10 +10,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants;
+import edu.wpi.first.networktables.NetworkTableInstance;
 public class Drive extends SubsystemBase {
   WPI_TalonSRX wrist = new WPI_TalonSRX(13);
   PigeonIMU gyro = new PigeonIMU(wrist);
@@ -29,6 +33,8 @@ public class Drive extends SubsystemBase {
   DifferentialDrive drive = new DifferentialDrive(leftDrive, rightDrive);
   double[] yprGyro;
   PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
+
+  double x, y, a, distanceToTarget;
 
   public void move(double leftSpeed, double rightSpeed)
   {
@@ -72,9 +78,34 @@ gyro.getYawPitchRoll(yprGyro);
     rightEncoderToFeet = rightTraveled * ((Math.PI*6)/49152);
    //SmartDashboard.putNumberArray("gyroarray", yprGyro );
     //SmartDashboard.putNumber("gyro0", yprGyro[0]);
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableEntry dx = table.getEntry("tx");
+    NetworkTableEntry dy = table.getEntry("ty");
+    NetworkTableEntry da = table.getEntry("ta");
+
+    x = dx.getDouble(0.0);
+    y = dy.getDouble(0.0);
+    a = da.getDouble(0.0);
+
+    SmartDashboard.putNumber("limelight_x", x);
+    SmartDashboard.putNumber("limelight_y", y);
+    SmartDashboard.putNumber("limelight_a", a);
+
+    double heightFromTarget = Constants.targetHeight - Constants.limelightHeight;
+    double theta = Math.toRadians(Constants.bottomAngle + y);
+    distanceToTarget = (heightFromTarget/Math.tan(theta));
+    
   }
   public double leftDistance(){
     return leftTraveled;
+  }
+
+  public double targetDistance(){
+    return distanceToTarget;
+  }
+
+  public double currentAngle(){
+    return x;
   }
  // public double rightDistance(){
     //return rightEncoderToFeet;

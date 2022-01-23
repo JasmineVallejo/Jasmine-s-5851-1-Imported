@@ -14,7 +14,10 @@ package frc.robot;
  */
 public final class Constants {
     public static double kP = 0.00001, kI = 0, kD = 0, autoMoveKP = 0.01, autoMoveKI = 0.01, 
-    autoMoveKD = 0, rollerSpeed = 0.5, liftSpeed = 0.5, intakeSpeed = 0.5, indexerSpeed = 0.5, shooterSpeed = 0.5;
+    autoMoveKD = 0, rollerSpeed = 0.5, liftSpeed = 0.5, intakeSpeed = 0.5, indexerSpeed = 0.5, 
+    
+    shooterSpeed = 0.5, bottomAngle = 30, targetHeight = 6, limelightHeight = 4,
+            shooterKP = 0, shooterKI = 0, shooterKD = 0;
     
     public static int angel = 0;
 }
